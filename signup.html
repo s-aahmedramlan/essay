@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - The Essay Bros</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="auth-body">
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><a href="index.html" style="text-decoration: none; color: inherit;">The Essay Bros</a></h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#curriculum">Curriculum</a></li>
+                <li><a href="index.html#plans">Plans</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="writers.html">Mentors</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="login.html" class="btn btn-primary btn-pill nav-cta">Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="auth-wrapper">
+        <div class="auth-card">
+            <h2>Create Your Account</h2>
+            <p>Enroll to access the Essay Bros course modules, templates, and workshops.</p>
+            <div id="auth-message" class="auth-message"></div>
+            <form id="signup-form" class="auth-form" method="POST" action="/signup">
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input id="signup-email" type="email" name="email" placeholder="you@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input id="signup-password" type="password" name="password" placeholder="Minimum 8 characters" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Account</button>
+            </form>
+            <div class="auth-links">
+                <span>Already enrolled?</span> <a href="login.html">Log in</a>
+            </div>
+        </div>
+
+        <div class="auth-card auth-card-secondary">
+            <h3>What happens next</h3>
+            <ul class="auth-checklist">
+                <li>✓ Enter the 6-digit code we email you</li>
+                <li>✓ Log in to unlock the course dashboard</li>
+                <li>✓ Start with Module 1 immediately</li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="amplify-config.js"></script>
+    <script src="amplify-auth.js"></script>
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        (function () {
+            const form = document.getElementById("signup-form");
+            const msg = document.getElementById("auth-message");
+            form.addEventListener("submit", async (e) => {
+                if (!window.AmplifyAuth?.isConfigured?.()) return;
+                e.preventDefault();
+                const email = document.getElementById("signup-email").value.trim();
+                const password = document.getElementById("signup-password").value;
+                msg.textContent = "";
+                msg.classList.remove("visible");
+                try {
+                    const result = await window.AmplifyAuth.signUp(email, password);
+                    if (result?.nextStep?.signUpStep === "CONFIRM_SIGN_UP") {
+                        location.href = "confirm.html?email=" + encodeURIComponent(email);
+                    } else if (result?.isSignUpComplete) {
+                        location.href = "login.html?status=verified";
+                    } else {
+                        msg.textContent = "Please check your email for a verification code.";
+                        msg.classList.add("visible");
+                        location.href = "confirm.html?email=" + encodeURIComponent(email);
+                    }
+                } catch (err) {
+                    msg.textContent = err.message || "Sign up failed. Try again.";
+                    msg.classList.add("visible");
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

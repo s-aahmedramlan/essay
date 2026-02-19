@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email - The Essay Bros</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="auth-body">
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><a href="index.html" style="text-decoration: none; color: inherit;">The Essay Bros</a></h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#curriculum">Curriculum</a></li>
+                <li><a href="index.html#plans">Plans</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="writers.html">Mentors</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="login.html" class="btn btn-primary btn-pill nav-cta">Student Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="auth-wrapper">
+        <div class="auth-card">
+            <h2>Verify Your Email</h2>
+            <p>We sent a 6-digit verification code to your email. Enter it below.</p>
+            <div id="confirm-message" class="auth-message"></div>
+            <form id="confirm-form" class="auth-form">
+                <div class="form-group">
+                    <label for="confirm-email">Email</label>
+                    <input id="confirm-email" type="email" placeholder="you@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-code">Verification Code</label>
+                    <input id="confirm-code" type="text" placeholder="123456" maxlength="6" pattern="[0-9]+" required autocomplete="one-time-code">
+                </div>
+                <button type="submit" class="btn btn-primary">Verify & Continue</button>
+                <button type="button" id="resend-btn" class="btn btn-secondary btn-secondary-dark" style="margin-left: 0.5rem;">Resend Code</button>
+            </form>
+            <div class="auth-links">
+                <a href="login.html">Back to Login</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="amplify-config.js"></script>
+    <script src="amplify-auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        (function () {
+            const params = new URLSearchParams(location.search);
+            const email = params.get("email");
+            if (email) document.getElementById("confirm-email").value = email;
+
+            document.getElementById("confirm-form").addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const emailEl = document.getElementById("confirm-email");
+                const codeEl = document.getElementById("confirm-code");
+                const msgEl = document.getElementById("confirm-message");
+                const email = emailEl.value.trim();
+                const code = codeEl.value.trim();
+
+                msgEl.textContent = "";
+                msgEl.classList.remove("visible");
+
+                if (!window.AmplifyAuth.isConfigured()) {
+                    msgEl.textContent = "Amplify is not configured. See AMPLIFY_SETUP.md.";
+                    msgEl.classList.add("visible");
+                    return;
+                }
+
+                try {
+                    await window.AmplifyAuth.confirmSignUp(email, code);
+                    msgEl.textContent = "Email verified! Redirecting to login...";
+                    msgEl.classList.add("visible");
+                    msgEl.style.background = "#d4edda";
+                    msgEl.style.color = "#155724";
+                    setTimeout(() => {
+                        location.href = "login.html?status=verified";
+                    }, 1500);
+                } catch (err) {
+                    msgEl.textContent = err.message || "Invalid or expired code. Check your email and try again.";
+                    msgEl.classList.add("visible");
+                }
+            });
+
+            document.getElementById("resend-btn").addEventListener("click", async () => {
+                const email = document.getElementById("confirm-email").value.trim();
+                const msgEl = document.getElementById("confirm-message");
+                if (!email) {
+                    msgEl.textContent = "Enter your email first.";
+                    msgEl.classList.add("visible");
+                    return;
+                }
+                if (!window.AmplifyAuth?.isConfigured?.()) {
+                    msgEl.textContent = "Amplify is not configured.";
+                    msgEl.classList.add("visible");
+                    return;
+                }
+                try {
+                    await window.AmplifyAuth.resendConfirmationCode(email);
+                    msgEl.textContent = "New code sent! Check your email.";
+                    msgEl.classList.add("visible");
+                    msgEl.style.background = "#d4edda";
+                    msgEl.style.color = "#155724";
+                } catch (err) {
+                    msgEl.textContent = err.message || "Could not resend. Try again in a minute.";
+                    msgEl.classList.add("visible");
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

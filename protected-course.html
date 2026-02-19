@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Dashboard - The Essay Bros</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="course-body">
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><a href="index.html" style="text-decoration: none; color: inherit;">The Essay Bros</a></h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#curriculum">Curriculum</a></li>
+                <li><a href="index.html#plans">Plans</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="writers.html">Mentors</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="logout.html" class="btn btn-primary btn-pill nav-cta">Log Out</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="course-hero">
+        <div class="container">
+            <div class="course-hero-grid">
+                <div>
+                    <h2>Welcome to your Essay Bros Course</h2>
+                    <p>Work through your weekly modules, complete milestones, and submit drafts for mentor feedback.</p>
+                    <div class="course-meta">
+                        <span>Current Cohort: Spring 2026</span>
+                        <span>Office Hours: Tue + Thu 7 PM EST</span>
+                    </div>
+                </div>
+                <div class="course-progress">
+                    <h4>Overall progress</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 35%;"></div>
+                    </div>
+                    <p>Module 2 of 6 completed</p>
+                    <a class="btn btn-secondary btn-secondary-dark" href="#modules">Continue Module 3</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="modules" class="course-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Weekly Modules</h2>
+                <p>Each week includes video lessons, templates, and a concrete deliverable. Click to expand and view content.</p>
+            </div>
+            <div class="course-modules">
+                <article class="course-card module-card" data-module="1">
+                    <div class="module-header">
+                        <div>
+                            <h3>Module 1: Personal Brand & Story Vault</h3>
+                            <p>Clarify the themes, values, and moments that should anchor your narrative.</p>
+                        </div>
+                        <button type="button" class="btn btn-primary module-toggle" aria-expanded="false">View Module</button>
+                    </div>
+                    <div class="module-content" hidden>
+                        <ul>
+                            <li>Story vault worksheet</li>
+                            <li>Values map template</li>
+                            <li>10-minute kickoff video</li>
+                        </ul>
+                        <div class="module-video">
+                            <h4>Kickoff: Brainstorming the Common App</h4>
+                            <div class="video-embed">
+                                <iframe src="https://www.youtube.com/embed/w4XzvDDYH4k" title="Common App essay brainstorming workshop" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <p class="module-cta">Complete the Story Vault worksheet before moving to Module 2.</p>
+                    </div>
+                </article>
+                <article class="course-card module-card" data-module="2">
+                    <div class="module-header">
+                        <div>
+                            <h3>Module 2: Hook + Structure</h3>
+                            <p>Build a compelling opening and outline your draft in 30 minutes.</p>
+                        </div>
+                        <button type="button" class="btn btn-primary module-toggle" aria-expanded="false">View Module</button>
+                    </div>
+                    <div class="module-content" hidden>
+                        <ul>
+                            <li>Hook bank examples</li>
+                            <li>Outline framework</li>
+                            <li>Draft checklist</li>
+                        </ul>
+                        <div class="module-video">
+                            <h4>Standout Personal Statement Tips</h4>
+                            <div class="video-embed">
+                                <iframe src="https://www.youtube.com/embed/3y8fVxwG5zQ" title="How to write a standout personal statement" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <p class="module-cta">Use the 30-minute outline framework to structure your essay.</p>
+                    </div>
+                </article>
+                <article class="course-card module-card active" data-module="3">
+                    <div class="module-header">
+                        <div>
+                            <h3>Module 3: First Draft Sprint</h3>
+                            <p>Write your full draft using guided prompts and time-boxed sprints.</p>
+                        </div>
+                        <button type="button" class="btn btn-primary module-toggle" aria-expanded="false">View Module</button>
+                    </div>
+                    <div class="module-content" hidden>
+                        <ul>
+                            <li>Draft sprint timer</li>
+                            <li>Momentum checklist</li>
+                            <li>Submission portal</li>
+                        </ul>
+                        <div class="module-video">
+                            <h4>Show, Don't Tell Techniques</h4>
+                            <div class="video-embed">
+                                <iframe src="https://www.youtube.com/embed/8pToG9XYWMI" title="Show don't tell in admissions essays" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <p class="module-cta">Submit your first draft for mentor feedback within 48 hours.</p>
+                    </div>
+                </article>
+                <article class="course-card module-card" data-module="4">
+                    <div class="module-header">
+                        <div>
+                            <h3>Module 4: Revision & Voice</h3>
+                            <p>Refine clarity, voice, and storytelling flow with targeted edits.</p>
+                        </div>
+                        <button type="button" class="btn btn-primary module-toggle" aria-expanded="false">View Module</button>
+                    </div>
+                    <div class="module-content" hidden>
+                        <ul>
+                            <li>Voice calibration guide</li>
+                            <li>Line-level edits</li>
+                            <li>Feedback rubric</li>
+                        </ul>
+                        <div class="module-video">
+                            <h4>Polish Pass Editing Checklist</h4>
+                            <div class="video-embed">
+                                <iframe src="https://www.youtube.com/embed/77i1fYY8lGQ" title="Editing checklist for college essays" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <p class="module-cta">Apply the line-level edit checklist to tighten your draft.</p>
+                    </div>
+                </article>
+                <article class="course-card module-card" data-module="5">
+                    <div class="module-header">
+                        <div>
+                            <h3>Module 5: Supplemental Strategy</h3>
+                            <p>Turn school research into specific, memorable responses.</p>
+                        </div>
+                        <button type="button" class="btn btn-primary module-toggle" aria-expanded="false">View Module</button>
+                    </div>
+                    <div class="module-content" hidden>
+                        <ul>
+                            <li>Why Us / Why Major templates</li>
+                            <li>Supplemental tracker</li>
+                            <li>Example library</li>
+                        </ul>
+                        <div class="module-video">
+                            <h4>Why Us / Why Major Strategy</h4>
+                            <div class="video-embed">
+                                <iframe src="https://www.youtube.com/embed/xmYIkb24Dq4" title="Supplemental essays: why us and why major" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <p class="module-cta">Research each school and complete the Why Us template.</p>
+                    </div>
+                </article>
+                <article class="course-card module-card" data-module="6">
+                    <div class="module-header">
+                        <div>
+                            <h3>Module 6: Final Polish & Submission</h3>
+                            <p>Proofread, finalize, and submit with confidence.</p>
+                        </div>
+                        <button type="button" class="btn btn-primary module-toggle" aria-expanded="false">View Module</button>
+                    </div>
+                    <div class="module-content" hidden>
+                        <ul>
+                            <li>Final checklist</li>
+                            <li>Submission calendar</li>
+                            <li>Mentor sign-off</li>
+                        </ul>
+                        <div class="module-video">
+                            <h4>Top Essay Mistakes to Avoid</h4>
+                            <div class="video-embed">
+                                <iframe src="https://www.youtube.com/embed/0eFSPupjczs" title="Avoiding common college essay mistakes" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <p class="module-cta">Use the final checklist before submitting to Common App.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="course-section course-support">
+        <div class="container">
+            <div class="support-grid">
+                <div>
+                    <h3>Live support</h3>
+                    <p>Drop into live office hours, submit drafts for feedback, and get rapid responses inside the private cohort space.</p>
+                    <ul class="support-list">
+                        <li>Weekly live workshop recordings</li>
+                        <li>Draft feedback within 48 hours</li>
+                        <li>Accountability reminders</li>
+                    </ul>
+                </div>
+                <div class="support-card">
+                    <h4>Upcoming live sessions</h4>
+                    <div class="support-item">
+                        <strong>Tuesday:</strong> Draft Sprint Lab (7:00 PM EST)
+                    </div>
+                    <div class="support-item">
+                        <strong>Thursday:</strong> Supplemental Strategy Q&A (7:00 PM EST)
+                    </div>
+                    <a class="btn btn-secondary btn-secondary-dark" href="index.html#apply">Book a 1:1 Review</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Essay Bros</h3>
+                    <p>Student-only course access. Powered by a secure login experience.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Dashboard</h4>
+                    <ul>
+                        <li><a href="#modules">Modules</a></li>
+                        <li><a href="index.html#previews">Previews</a></li>
+                        <li><a href="index.html#apply">Apply Now</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li>Email: support@essaybros.com</li>
+                        <li>Office Hours: Tue + Thu 7 PM EST</li>
+                        <li><a href="logout.html">Log Out</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 The Essay Bros. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="amplify-config.js"></script>
+    <script src="amplify-auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        (async function authGuard() {
+            if (window.AmplifyAuth?.isConfigured?.()) {
+                const user = await window.AmplifyAuth.getCurrentUser();
+                if (!user) {
+                    window.location.replace("login.html?status=login-required");
+                    return;
+                }
+            }
+        })();
+        document.querySelectorAll('.module-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const card = btn.closest('.module-card');
+                const content = card.querySelector('.module-content');
+                const isOpen = !content.hidden;
+                content.hidden = isOpen;
+                btn.setAttribute('aria-expanded', !isOpen);
+                btn.textContent = isOpen ? 'View Module' : 'Collapse';
+            });
+        });
+    </script>
+</body>
+</html>
