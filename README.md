@@ -2,6 +2,20 @@
 
 Course website with secure student login and email verification.
 
+## How to make it live so anyone can use it
+
+You already have **Cognito** set up for sign-up and login. To have a site anyone can visit and use:
+
+1. **Deploy the app** to a host (e.g. Render) so it’s on the internet instead of only on your computer.
+2. **Connect your domain** (essaybros.com) to that host in GoDaddy DNS so people can open essaybros.com.
+3. **Done.** Sign-up and login keep using Cognito; no extra auth setup for production.
+
+Details are below: “Deploy to Render” and “Connect essaybros.com”.
+
+**Verification emails:** Cognito sends the 6-digit code. If emails don’t arrive in production, see AMPLIFY_SETUP.md (“Verification email not arriving”) — you may need to use Amazon SES and verify your sender/domain.
+
+---
+
 ## Run locally
 - Install: `npm install`
 - Start: `npm start`

@@ -191,6 +191,12 @@ app.get("/script.js", (req, res) =>
 app.get("/auth.js", (req, res) =>
     res.sendFile(path.join(__dirname, "auth.js"))
 );
+app.get("/amplify-config.js", (req, res) =>
+    res.sendFile(path.join(__dirname, "amplify-config.js"))
+);
+app.get("/amplify-auth.js", (req, res) =>
+    res.sendFile(path.join(__dirname, "amplify-auth.js"))
+);
 
 app.get("/", (req, res) =>
     res.sendFile(path.join(__dirname, "index.html"))
@@ -218,136 +224,17 @@ app.get(["/signup", "/signup.html"], (req, res) =>
     res.sendFile(path.join(__dirname, "signup.html"))
 );
 
-app.post("/signup", async (req, res) => {
-    const email = String(req.body.email || "").trim().toLowerCase();
-    const password = String(req.body.password || "");
-
-    if (!email || !password || password.length < 8) {
-        res.redirect("/signup?status=invalid");
-        return;
-    }
-
-    const existing = await get("SELECT id FROM users WHERE email = ?", [email]);
-    if (existing) {
-        res.redirect("/login?status=account-exists");
-        return;
-    }
-
-    const passwordHash = await bcrypt.hash(password, 12);
-    const createdAt = new Date().toISOString();
-    const result = await run(
-        "INSERT INTO users (email, password_hash, is_verified, created_at) VALUES (?, ?, 0, ?)",
-        [email, passwordHash, createdAt]
-    );
-
-    const token = crypto.randomBytes(32).toString("hex");
-    const expiresAt = Date.now() + 1000 * 60 * 60 * 24;
-    await run(
-        "INSERT INTO verification_tokens (user_id, token, expires_at, created_at) VALUES (?, ?, ?, ?)",
-        [result.lastID, token, expiresAt, createdAt]
-    );
-
-    try {
-        await sendVerificationEmail(email, token);
-        res.redirect("/login?status=verify-sent");
-    } catch (err) {
-        console.error("Verification email failed", err);
-        res.redirect("/signup?status=email-failed");
-    }
+// Auth is handled by Amplify (Cognito) only — no local DB signup/login
+app.post("/signup", (req, res) => {
+    res.redirect("/signup");
+});
+app.post("/login", (req, res) => {
+    res.redirect("/login");
 });
 
-app.post("/login", async (req, res) => {
-    const email = String(req.body.email || "").trim().toLowerCase();
-    const password = String(req.body.password || "");
-
-    const user = await get("SELECT id, password_hash, is_verified FROM users WHERE email = ?", [
-        email
-    ]);
-
-    if (!user) {
-        res.redirect("/login?status=invalid-login");
-        return;
-    }
-
-    const valid = await bcrypt.compare(password, user.password_hash);
-    if (!valid) {
-        res.redirect("/login?status=invalid-login");
-        return;
-    }
-
-    if (user.is_verified !== 1) {
-        res.redirect("/login?status=verify-required");
-        return;
-    }
-
-    req.session.regenerate((err) => {
-        if (err) {
-            res.redirect("/login?status=server-error");
-            return;
-        }
-        req.session.userId = user.id;
-        res.redirect("/course");
-    });
-});
-
-app.post("/resend", async (req, res) => {
-    const email = String(req.body.email || "").trim().toLowerCase();
-    if (!email) {
-        res.redirect("/login?status=invalid");
-        return;
-    }
-
-    const user = await get("SELECT id, is_verified FROM users WHERE email = ?", [email]);
-    if (!user) {
-        res.redirect("/login?status=verify-sent");
-        return;
-    }
-
-    if (user.is_verified === 1) {
-        res.redirect("/login?status=already-verified");
-        return;
-    }
-
-    const token = crypto.randomBytes(32).toString("hex");
-    const expiresAt = Date.now() + 1000 * 60 * 60 * 24;
-    const createdAt = new Date().toISOString();
-
-    await run("DELETE FROM verification_tokens WHERE user_id = ?", [user.id]);
-    await run(
-        "INSERT INTO verification_tokens (user_id, token, expires_at, created_at) VALUES (?, ?, ?, ?)",
-        [user.id, token, expiresAt, createdAt]
-    );
-
-    try {
-        await sendVerificationEmail(email, token);
-        res.redirect("/login?status=verify-sent");
-    } catch (err) {
-        console.error("Verification email failed", err);
-        res.redirect("/login?status=email-failed");
-    }
-});
-
-app.get("/verify", async (req, res) => {
-    const token = String(req.query.token || "");
-    if (!token) {
-        res.redirect("/login?status=invalid-token");
-        return;
-    }
-
-    const record = await get(
-        "SELECT user_id, expires_at FROM verification_tokens WHERE token = ?",
-        [token]
-    );
-
-    if (!record || record.expires_at < Date.now()) {
-        res.redirect("/login?status=invalid-token");
-        return;
-    }
-
-    await run("UPDATE users SET is_verified = 1 WHERE id = ?", [record.user_id]);
-    await run("DELETE FROM verification_tokens WHERE user_id = ?", [record.user_id]);
-    res.redirect("/login?status=verified");
-});
+// Resend/verify handled by Amplify (Cognito) — no local DB
+app.post("/resend", (req, res) => res.redirect("/confirm.html"));
+app.get("/verify", (req, res) => res.redirect("/confirm.html"));
 
 app.get("/logout", (req, res) => {
     req.session.destroy(() => {
@@ -355,7 +242,7 @@ app.get("/logout", (req, res) => {
     });
 });
 
-app.get("/course", requireAuth, (req, res) => {
+app.get("/course", (req, res) => {
     res.sendFile(path.join(__dirname, "protected-course.html"));
 });
 app.get(["/protected-course", "/protected-course.html"], (req, res) =>

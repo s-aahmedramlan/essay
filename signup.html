@@ -37,7 +37,7 @@
             <h2>Create Your Account</h2>
             <p>Enroll to access the Essay Bros course modules, templates, and workshops.</p>
             <div id="auth-message" class="auth-message"></div>
-            <form id="signup-form" class="auth-form" method="POST" action="/signup">
+            <form id="signup-form" class="auth-form" action="#">
                 <div class="form-group">
                     <label for="signup-email">Email</label>
                     <input id="signup-email" type="email" name="email" placeholder="you@email.com" required>
@@ -63,17 +63,21 @@
         </div>
     </main>
 
-    <script src="amplify-config.js"></script>
-    <script src="amplify-auth.js"></script>
+    <script src="/amplify-config.js"></script>
+    <script src="/amplify-auth.js"></script>
     <script src="script.js"></script>
     <script src="auth.js"></script>
     <script>
         (function () {
-            const form = document.getElementById("signup-form");
-            const msg = document.getElementById("auth-message");
+            var form = document.getElementById("signup-form");
+            var msg = document.getElementById("auth-message");
             form.addEventListener("submit", async (e) => {
-                if (!window.AmplifyAuth?.isConfigured?.()) return;
                 e.preventDefault();
+                if (!window.AmplifyAuth?.isConfigured?.()) {
+                    msg.textContent = "Amplify is not configured. Add your Cognito IDs to amplify-config.js.";
+                    msg.classList.add("visible");
+                    return;
+                }
                 const email = document.getElementById("signup-email").value.trim();
                 const password = document.getElementById("signup-password").value;
                 msg.textContent = "";
@@ -81,16 +85,26 @@
                 try {
                     const result = await window.AmplifyAuth.signUp(email, password);
                     if (result?.nextStep?.signUpStep === "CONFIRM_SIGN_UP") {
-                        location.href = "confirm.html?email=" + encodeURIComponent(email);
+                        msg.textContent = "Taking you to the verification page…";
+                        msg.classList.add("visible");
+                        setTimeout(function () {
+                            location.href = "confirm.html?email=" + encodeURIComponent(email);
+                        }, 500);
                     } else if (result?.isSignUpComplete) {
                         location.href = "login.html?status=verified";
                     } else {
-                        msg.textContent = "Please check your email for a verification code.";
+                        msg.textContent = "Taking you to the verification page…";
                         msg.classList.add("visible");
-                        location.href = "confirm.html?email=" + encodeURIComponent(email);
+                        setTimeout(function () {
+                            location.href = "confirm.html?email=" + encodeURIComponent(email);
+                        }, 500);
                     }
                 } catch (err) {
-                    msg.textContent = err.message || "Sign up failed. Try again.";
+                    var text = err.message || "Sign up failed. Try again.";
+                    if (/already exists|registered|UsernameExists/i.test(text)) {
+                        text = "That email is already in use. Go to the verification page to enter your code, or delete the user in Cognito to sign up again.";
+                    }
+                    msg.innerHTML = text + ' <a href="confirm.html?email=' + encodeURIComponent(email) + '"><strong>Open verification page</strong></a>';
                     msg.classList.add("visible");
                 }
             });

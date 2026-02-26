@@ -37,7 +37,10 @@
             <h2>Student Login</h2>
             <p>Access your Essay Bros course dashboard and coaching materials.</p>
             <div id="auth-message" class="auth-message"></div>
-            <form id="login-form" class="auth-form" method="POST" action="/login">
+            <p id="verify-page-link" class="auth-verify-link" style="display: none; margin-bottom: 1rem;">
+                <a href="confirm.html" class="btn btn-primary">Go to verification page →</a>
+            </p>
+            <form id="login-form" class="auth-form" action="#">
                 <div class="form-group">
                     <label for="login-email">Email</label>
                     <input id="login-email" type="email" name="email" placeholder="you@email.com" required>
@@ -54,16 +57,14 @@
         </div>
 
         <div class="auth-card auth-card-secondary">
-            <h3>Resend Verification Code</h3>
+            <h3>Need to enter your code?</h3>
             <p>If you signed up but didn’t receive your verification link, we can send another.</p>
-            <div class="auth-links">
-                <a href="signup.html">Create new account to get a new code</a>
-            </div>
+            <p style="margin-top: 0.75rem;"><a href="confirm.html" class="btn btn-secondary btn-secondary-dark">Open verification page</a></p>
         </div>
     </main>
 
-    <script src="amplify-config.js"></script>
-    <script src="amplify-auth.js"></script>
+    <script src="/amplify-config.js"></script>
+    <script src="/amplify-auth.js"></script>
     <script src="script.js"></script>
     <script src="auth.js"></script>
     <script>
@@ -75,11 +76,20 @@
                     return;
                 }
             }
+            var s = new URLSearchParams(location.search).get("status");
+            if (s === "verify-sent" || s === "verify-required") {
+                var link = document.getElementById("verify-page-link");
+                if (link) link.style.display = "block";
+            }
             const form = document.getElementById("login-form");
             const msg = document.getElementById("auth-message");
             form.addEventListener("submit", async (e) => {
-                if (!window.AmplifyAuth?.isConfigured?.()) return;
                 e.preventDefault();
+                if (!window.AmplifyAuth?.isConfigured?.()) {
+                    msg.textContent = "Amplify is not configured. Add your Cognito IDs to amplify-config.js.";
+                    msg.classList.add("visible");
+                    return;
+                }
                 const email = document.getElementById("login-email").value.trim();
                 const password = document.getElementById("login-password").value;
                 msg.textContent = "";

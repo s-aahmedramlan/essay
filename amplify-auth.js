@@ -1,10 +1,24 @@
 /**
  * Amplify Auth integration for Essay Bros
  * Uses AWS Cognito for sign-up, email verification (code), and sign-in.
+ * Config is inline so it always loads; also respects window.AMPLIFY_CONFIG if set.
  */
 (function () {
-  const config = window.AMPLIFY_CONFIG;
-  if (!config || !config.Auth?.Cognito?.userPoolId || config.Auth.Cognito.userPoolId === "YOUR_USER_POOL_ID") {
+  var inlineConfig = {
+    Auth: {
+      Cognito: {
+        userPoolId: "us-east-2_mE9j7A8G8",
+        userPoolClientId: "2hmt806ccp2i8hlqdgfhuqfm93",
+        loginWith: { email: true },
+        signUpVerificationMethod: "code",
+        userAttributes: { email: { required: true } },
+        passwordFormat: { minLength: 8 },
+      },
+    },
+  };
+  var fromWindow = window.AMPLIFY_CONFIG && window.AMPLIFY_CONFIG.Auth && window.AMPLIFY_CONFIG.Auth.Cognito && window.AMPLIFY_CONFIG.Auth.Cognito.userPoolId && window.AMPLIFY_CONFIG.Auth.Cognito.userPoolId !== "YOUR_USER_POOL_ID";
+  var config = fromWindow ? window.AMPLIFY_CONFIG : inlineConfig;
+  if (!config.Auth.Cognito.userPoolId || config.Auth.Cognito.userPoolId === "YOUR_USER_POOL_ID") {
     window.amplifyAuthReady = Promise.resolve(false);
     window.AmplifyAuth = {
       isConfigured: () => false,
@@ -30,7 +44,7 @@
   window.amplifyAuthReady = init();
 
   window.AmplifyAuth = {
-    isConfigured: () => !!config?.Auth?.Cognito?.userPoolId && config.Auth.Cognito.userPoolId !== "YOUR_USER_POOL_ID",
+    isConfigured: function () { return !!(config && config.Auth && config.Auth.Cognito && config.Auth.Cognito.userPoolId && config.Auth.Cognito.userPoolId !== "YOUR_USER_POOL_ID"); },
 
     async signUp(email, password) {
       await init();

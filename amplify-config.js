@@ -7,8 +7,8 @@
 window.AMPLIFY_CONFIG = {
   Auth: {
     Cognito: {
-      userPoolId: "YOUR_USER_POOL_ID",
-      userPoolClientId: "YOUR_CLIENT_ID",
+      userPoolId: "us-east-2_mE9j7A8G8",
+      userPoolClientId: "2hmt806ccp2i8hlqdgfhuqfm93",
       loginWith: { email: true },
       signUpVerificationMethod: "code",
       userAttributes: { email: { required: true } },
