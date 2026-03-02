@@ -201,7 +201,7 @@ app.get("/amplify-auth.js", (req, res) =>
     res.sendFile(path.join(__dirname, "amplify-auth.js"))
 );
 
-app.get("/", (req, res) =>
+app.get(["/", "/index.html"], (req, res) =>
     res.sendFile(path.join(__dirname, "index.html"))
 );
 app.get(["/about", "/about.html"], (req, res) =>
