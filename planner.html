@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Planner - The Essay Bros</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><a href="index.html" style="text-decoration: none; color: inherit;">The Essay Bros</a></h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#curriculum">Curriculum</a></li>
+                <li><a href="index.html#plans">Plans</a></li>
+                <li><a href="index.html#previews">Previews</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="writers.html">Mentors</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="essay-builder.html">Essay Builder</a></li>
+                <li><a href="planner.html" class="btn btn-secondary btn-pill nav-cta">College Planner</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="builder-hero">
+        <div class="container">
+            <div class="section-header" style="text-align: left;">
+                <h2>College Planning Hub</h2>
+                <p>Keep your college list, priorities, and deadlines in one place. Everything here saves in your browser on this device.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="builder-layout">
+        <div class="container">
+            <div class="builder-grid">
+                <div class="builder-panel">
+                    <h3>College list</h3>
+                    <p>Start by listing the schools you’re actually considering. You can tag them as reach/target/safety and rank your interest.</p>
+                    <form id="college-form" class="auth-form" style="margin-top: 0.5rem;">
+                        <div class="form-group">
+                            <label for="college-name">College name</label>
+                            <input id="college-name" type="text" placeholder="e.g. Northwestern University" required>
+                        </div>
+                        <div class="form-group" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                            <div style="flex: 1 1 150px;">
+                                <label for="college-tier">Tier</label>
+                                <select id="college-tier">
+                                    <option value="target">Target</option>
+                                    <option value="reach">Reach</option>
+                                    <option value="safety">Safety</option>
+                                </select>
+                            </div>
+                            <div style="flex: 1 1 150px;">
+                                <label for="college-location">Location vibe</label>
+                                <select id="college-location">
+                                    <option value="">Any</option>
+                                    <option value="urban">Urban</option>
+                                    <option value="suburban">Suburban</option>
+                                    <option value="rural">Rural</option>
+                                </select>
+                            </div>
+                            <div style="flex: 1 1 150px;">
+                                <label for="college-priority">Interest (1–5)</label>
+                                <input id="college-priority" type="number" min="1" max="5" value="3">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="college-notes">Notes (major fit, vibe, cost, etc.)</label>
+                            <textarea id="college-notes" rows="2" placeholder="What excites you or worries you about this school?"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add to list</button>
+                    </form>
+                    <p class="builder-tagline">Pro tip: aim for a balanced list (roughly 2–3 reach, 3–5 target, 2–3 safety depending on your risk level).</p>
+                    <div class="builder-summary">
+                        <strong>Your current list:</strong>
+                        <div id="college-table-wrapper" class="builder-output" style="margin-top: 0.75rem; max-height: 260px; overflow-y: auto;">
+                            <table id="college-table" style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:left;">College</th>
+                                        <th>Tier</th>
+                                        <th>Interest</th>
+                                        <th>Location</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="college-tbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="builder-panel">
+                    <h3>Deadlines & tasks</h3>
+                    <p>Map out applications, scholarship deadlines, and key milestones. We’ll highlight what’s urgent.</p>
+                    <form id="deadline-form" class="auth-form" style="margin-top: 0.5rem;">
+                        <div class="form-group">
+                            <label for="deadline-college">For college</label>
+                            <input list="college-options" id="deadline-college" placeholder="Pick from your list or type a new one" required>
+                            <datalist id="college-options"></datalist>
+                        </div>
+                        <div class="form-group" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                            <div style="flex: 1 1 160px;">
+                                <label for="deadline-type">Type</label>
+                                <select id="deadline-type">
+                                    <option value="ea">EA</option>
+                                    <option value="ed">ED</option>
+                                    <option value="rd">RD</option>
+                                    <option value="scholarship">Scholarship</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div style="flex: 1 1 160px;">
+                                <label for="deadline-date">Due date</label>
+                                <input id="deadline-date" type="date" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="deadline-notes">What needs to be done?</label>
+                            <input id="deadline-notes" type="text" placeholder="e.g. Common App + 2 supplements, financial aid, portfolio">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add deadline</button>
+                    </form>
+                    <div class="builder-summary">
+                        <strong>Upcoming deadlines (next 90 days):</strong>
+                        <div id="deadline-list" class="builder-output" style="margin-top: 0.75rem; max-height: 260px; overflow-y: auto; white-space: normal;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Essay Bros</h3>
+                    <p>A structured course and planning hub so you’re never guessing what to do next.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Course</h4>
+                    <ul>
+                        <li><a href="index.html#curriculum">Curriculum</a></li>
+                        <li><a href="index.html#plans">Plans</a></li>
+                        <li><a href="protected-course.html">Student Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="essay-builder.html">Essay Builder</a></li>
+                        <li><a href="planner.html">College Planner</a></li>
+                        <li><a href="loci.html">LOCI Guide</a></li>
+                        <li><a href="appeals.html">Appeals Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="index.html#apply">Apply for Enrollment</a></li>
+                        <li>Email: hello@essaybros.com</li>
+                        <li>Phone: (555) 212-9901</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 The Essay Bros. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="planner.js"></script>
+</body>
+</html>
+

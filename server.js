@@ -188,6 +188,9 @@ app.get("/styles.css", (req, res) =>
 app.get("/script.js", (req, res) =>
     res.sendFile(path.join(__dirname, "script.js"))
 );
+app.get("/builder.js", (req, res) =>
+    res.sendFile(path.join(__dirname, "builder.js"))
+);
 app.get("/auth.js", (req, res) =>
     res.sendFile(path.join(__dirname, "auth.js"))
 );
@@ -218,6 +221,9 @@ app.get(["/appeals", "/appeals.html"], (req, res) =>
 );
 app.get(["/essay-builder", "/essay-builder.html"], (req, res) =>
     res.sendFile(path.join(__dirname, "essay-builder.html"))
+);
+app.get(["/planner", "/planner.html"], (req, res) =>
+    res.sendFile(path.join(__dirname, "planner.html"))
 );
 
 app.get(["/login", "/login.html"], (req, res) =>
