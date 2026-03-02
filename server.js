@@ -216,6 +216,9 @@ app.get(["/loci", "/loci.html"], (req, res) =>
 app.get(["/appeals", "/appeals.html"], (req, res) =>
     res.sendFile(path.join(__dirname, "appeals.html"))
 );
+app.get(["/essay-builder", "/essay-builder.html"], (req, res) =>
+    res.sendFile(path.join(__dirname, "essay-builder.html"))
+);
 
 app.get(["/login", "/login.html"], (req, res) =>
     res.sendFile(path.join(__dirname, "login.html"))

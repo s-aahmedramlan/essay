@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essay Builder - The Essay Bros</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><a href="index.html" style="text-decoration: none; color: inherit;">The Essay Bros</a></h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#curriculum">Curriculum</a></li>
+                <li><a href="index.html#plans">Plans</a></li>
+                <li><a href="index.html#previews">Previews</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="writers.html">Mentors</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="essay-builder.html" class="btn btn-secondary btn-pill nav-cta">Essay Builder</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="builder-hero">
+        <div class="container">
+            <div class="section-header" style="text-align: left;">
+                <h2>Essay Builder</h2>
+                <p>Paste a story or set of notes and we’ll help you shape a clear intro, body, conclusion, and mission statement.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="builder-layout">
+        <div class="container">
+            <div class="builder-grid">
+                <div class="builder-panel">
+                    <h3>Your story or notes</h3>
+                    <p>Drop in anything: a messy draft, bullet points, or a journal-style story. We’ll segment it and give you editable sections.</p>
+                    <textarea id="builder-input" class="builder-input" placeholder="Paste your story here. Aim for 300–800 words for best results."></textarea>
+                    <div class="builder-actions">
+                        <button id="builder-analyze" class="btn btn-primary">Segment my story</button>
+                        <button id="builder-clear" class="btn btn-secondary btn-secondary-dark">Clear</button>
+                    </div>
+                    <p class="builder-tagline">Tip: Focus on one concrete moment, what changed, and what it says about your values.</p>
+                </div>
+
+                <div class="builder-panel">
+                    <h3>Structured draft</h3>
+                    <div class="builder-section">
+                        <h4>Hook & Intro</h4>
+                        <textarea id="builder-intro" placeholder="Set the scene in 2–4 sentences. Start in the middle of the moment, then zoom out."></textarea>
+                        <div class="builder-hints">
+                            <strong>Questions to answer:</strong>
+                            <ul>
+                                <li>Where are we? What’s happening?</li>
+                                <li>What’s at stake for you?</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="builder-section">
+                        <h4>Body</h4>
+                        <textarea id="builder-body" placeholder="Show key beats of the story. Use concrete actions, thoughts, and small details."></textarea>
+                        <div class="builder-hints">
+                            <strong>Questions to answer:</strong>
+                            <ul>
+                                <li>What did you try, struggle with, or change?</li>
+                                <li>What did you notice about yourself or others?</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="builder-section">
+                        <h4>Conclusion</h4>
+                        <textarea id="builder-conclusion" placeholder="Zoom out. What did this change about how you think or act now?"></textarea>
+                        <div class="builder-hints">
+                            <strong>Questions to answer:</strong>
+                            <ul>
+                                <li>How are you different because of this?</li>
+                                <li>What will you do next because of it?</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="builder-section">
+                        <h4>Mission & “Why this school” seeds</h4>
+                        <textarea id="builder-mission" placeholder="1–3 sentences that connect your story to a bigger mission, community impact, or academic interest. This often feeds your supplements."></textarea>
+                    </div>
+
+                    <div class="builder-summary">
+                        <strong>Working outline:</strong>
+                        <pre id="builder-outline" class="builder-output">Paste a story and click “Segment my story” to see a rough outline here.</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Essay Bros</h3>
+                    <p>A structured essay course and builder to help you move from messy ideas to a clear draft.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Course</h4>
+                    <ul>
+                        <li><a href="index.html#curriculum">Curriculum</a></li>
+                        <li><a href="index.html#plans">Plans</a></li>
+                        <li><a href="protected-course.html">Student Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="essay-builder.html">Essay Builder</a></li>
+                        <li><a href="loci.html">LOCI Guide</a></li>
+                        <li><a href="appeals.html">Appeals Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="index.html#apply">Apply for Enrollment</a></li>
+                        <li>Email: hello@essaybros.com</li>
+                        <li>Phone: (555) 212-9901</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 The Essay Bros. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="builder.js"></script>
+</body>
+</html>
+
