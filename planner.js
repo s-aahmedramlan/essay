@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const DEADLINE_KEY = 'essaybros_planner_deadlines_v1';
 
   const collegeForm = document.getElementById('college-form');
-  const collegeTbody = document.getElementById('college-tbody');
+  const collegeList = document.getElementById('college-list');
   const collegeOptions = document.getElementById('college-options');
 
   const deadlineForm = document.getElementById('deadline-form');
@@ -42,22 +42,35 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderColleges() {
-    if (!collegeTbody) return;
-    collegeTbody.innerHTML = '';
+    if (!collegeList) return;
+    collegeList.innerHTML = '';
     const sorted = [...colleges].sort((a, b) => b.priority - a.priority);
+
+    if (!sorted.length) {
+      const empty = document.createElement('p');
+      empty.className = 'builder-tagline';
+      empty.textContent = 'No colleges yet. Add a few above to start shaping your list.';
+      collegeList.appendChild(empty);
+    }
+
     for (const c of sorted) {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td style="padding: 0.25rem 0.4rem;">${c.name}</td>
-        <td style="text-align:center; padding: 0.25rem 0.4rem;">${tierEmoji(c.tier)} ${tierLabel(c.tier)}</td>
-        <td style="text-align:center; padding: 0.25rem 0.4rem;">${c.priority}</td>
-        <td style="text-align:center; padding: 0.25rem 0.4rem;">${c.location || '—'}</td>
-        <td style="text-align:right; padding: 0.25rem 0.4rem;">
-            <button data-id="${c.id}" class="planner-remove" style="border:none;background:none;color:#c53030;cursor:pointer;font-size:0.8rem;">remove</button>
-        </td>
+      const card = document.createElement('div');
+      card.className = 'planner-card';
+      card.innerHTML = `
+        <div class="planner-main">
+          <h4>${c.name}</h4>
+          <div class="planner-tags">
+            <span class="planner-pill ${c.tier}">${tierEmoji(c.tier)} ${tierLabel(c.tier)}</span>
+            <span class="planner-pill">⭐ ${c.priority}/5 interest</span>
+            ${c.location ? `<span class="planner-pill location">📍 ${c.location}</span>` : ''}
+          </div>
+          ${c.notes ? `<div class="planner-meta">${c.notes}</div>` : ''}
+        </div>
+        <div class="planner-actions">
+          <button data-id="${c.id}" class="planner-remove">Remove</button>
+        </div>
       `;
-      tr.title = c.notes || '';
-      collegeTbody.appendChild(tr);
+      collegeList.appendChild(card);
     }
 
     if (collegeOptions) {
@@ -169,8 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (collegeTbody) {
-    collegeTbody.addEventListener('click', e => {
+  if (collegeList) {
+    collegeList.addEventListener('click', e => {
       const btn = e.target.closest('.planner-remove');
       if (!btn) return;
       const id = btn.getAttribute('data-id');
