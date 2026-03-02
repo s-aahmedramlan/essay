@@ -37,7 +37,7 @@
         <div class="container">
             <div class="section-header" style="text-align: left;">
                 <h2>Essay Builder</h2>
-                <p>Paste a story or set of notes and we’ll help you shape a clear intro, body, conclusion, and mission statement.</p>
+                <p>Paste your prompt and activities, and this workspace will stitch them into a first-draft essay you can revise into your own voice.</p>
             </div>
         </div>
     </section>
@@ -46,62 +46,48 @@
         <div class="container">
             <div class="builder-grid">
                 <div class="builder-panel">
-                    <h3>Your story or notes</h3>
-                    <p>Drop in anything: a messy draft, bullet points, or a journal-style story. We’ll segment it and give you editable sections.</p>
-                    <textarea id="builder-input" class="builder-input" placeholder="Paste your story here. Aim for 300–800 words for best results."></textarea>
+                    <h3>Prompt & activities</h3>
+                    <p>First, drop in the exact prompt. Then list 3–6 activities or experiences you might write about.</p>
+                    <div class="builder-section">
+                        <h4>Prompt</h4>
+                        <textarea id="builder-prompt" class="builder-input" placeholder="Paste the full prompt here."></textarea>
+                    </div>
+                    <div class="builder-section">
+                        <h4>Activities / experiences</h4>
+                        <textarea id="builder-ecs" class="builder-input" style="min-height: 180px;" placeholder="- Robotics captain – led a team to build a low-cost prosthetic arm
+- Debate – learned to listen before arguing back
+- Tutoring – ran free Saturday math sessions for middle schoolers
+- Community garden – organized neighbors to grow and donate produce"></textarea>
+                    </div>
                     <div class="builder-actions">
-                        <button id="builder-analyze" class="btn btn-primary">Segment my story</button>
+                        <label for="builder-wc" style="font-size: 0.9rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem;">
+                            Target word count
+                            <input id="builder-wc" type="number" min="250" max="650" step="25" value="650" style="width: 90px; padding: 0.3rem 0.4rem; border-radius: 6px; border: 1px solid var(--border-color);">
+                        </label>
+                    </div>
+                    <div class="builder-actions">
+                        <button id="builder-generate" class="btn btn-primary">Generate draft</button>
                         <button id="builder-clear" class="btn btn-secondary btn-secondary-dark">Clear</button>
                     </div>
-                    <p class="builder-tagline">Tip: Focus on one concrete moment, what changed, and what it says about your values.</p>
+                    <p class="builder-tagline">This won’t be your final essay. Think of it as a structured starting point you can rewrite into your own voice.</p>
                 </div>
 
                 <div class="builder-panel">
-                    <h3>Structured draft</h3>
+                    <h3>Draft essay</h3>
                     <div class="builder-section">
-                        <h4>Hook & Intro</h4>
-                        <textarea id="builder-intro" placeholder="Set the scene in 2–4 sentences. Start in the middle of the moment, then zoom out."></textarea>
+                        <textarea id="builder-essay" style="min-height: 360px; width: 100%; padding: 1rem; border-radius: 10px; border: 1px solid var(--border-color); font-family: 'Inter', sans-serif; font-size: 0.98rem; resize: vertical;" placeholder="Your generated draft will appear here. Edit freely to make it sound fully like you."></textarea>
                         <div class="builder-hints">
-                            <strong>Questions to answer:</strong>
+                            <strong>Make it yours:</strong>
                             <ul>
-                                <li>Where are we? What’s happening?</li>
-                                <li>What’s at stake for you?</li>
+                                <li>Swap generic phrases for details only you would notice.</li>
+                                <li>Read it out loud and cut anything that sounds stiff.</li>
+                                <li>Keep 1–2 vivid moments, not your whole resume.</li>
                             </ul>
                         </div>
                     </div>
-
-                    <div class="builder-section">
-                        <h4>Body</h4>
-                        <textarea id="builder-body" placeholder="Show key beats of the story. Use concrete actions, thoughts, and small details."></textarea>
-                        <div class="builder-hints">
-                            <strong>Questions to answer:</strong>
-                            <ul>
-                                <li>What did you try, struggle with, or change?</li>
-                                <li>What did you notice about yourself or others?</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="builder-section">
-                        <h4>Conclusion</h4>
-                        <textarea id="builder-conclusion" placeholder="Zoom out. What did this change about how you think or act now?"></textarea>
-                        <div class="builder-hints">
-                            <strong>Questions to answer:</strong>
-                            <ul>
-                                <li>How are you different because of this?</li>
-                                <li>What will you do next because of it?</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="builder-section">
-                        <h4>Mission & “Why this school” seeds</h4>
-                        <textarea id="builder-mission" placeholder="1–3 sentences that connect your story to a bigger mission, community impact, or academic interest. This often feeds your supplements."></textarea>
-                    </div>
-
                     <div class="builder-summary">
-                        <strong>Working outline:</strong>
-                        <pre id="builder-outline" class="builder-output">Paste a story and click “Segment my story” to see a rough outline here.</pre>
+                        <strong>How we used your activities:</strong>
+                        <pre id="builder-notes" class="builder-output">After you generate, this will explain which activities fed the intro, body, and conclusion so you can tweak the angle.</pre>
                     </div>
                 </div>
             </div>
