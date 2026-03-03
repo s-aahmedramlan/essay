@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Explorer - The Essay Bros</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><a href="index.html" style="text-decoration: none; color: inherit;">The Essay Bros</a></h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#curriculum">Curriculum</a></li>
+                <li><a href="index.html#plans">Plans</a></li>
+                <li><a href="index.html#previews">Previews</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="writers.html">Mentors</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="essay-builder.html">Essay Builder</a></li>
+                <li><a href="planner.html">College Planner</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="builder-hero">
+        <div class="container">
+            <div class="section-header" style="text-align: left;">
+                <h2>College Explorer</h2>
+                <p>Browse popular colleges, see quick stats, and get a feel for campus life at a glance. Use this with your planner to build a smart list.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="builder-layout">
+        <div class="container">
+            <div class="explorer-layout">
+                <div class="explorer-filters">
+                    <div class="form-group">
+                        <label for="college-search">Search by name or state</label>
+                        <input id="college-search" type="text" placeholder="e.g. Northwestern, California, UT Austin">
+                    </div>
+                    <div class="form-group" style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+                        <div style="flex:1 1 160px;">
+                            <label for="explorer-type">Type</label>
+                            <select id="explorer-type">
+                                <option value="">Any</option>
+                                <option value="private">Private</option>
+                                <option value="public">Public</option>
+                            </select>
+                        </div>
+                        <div style="flex:1 1 160px;">
+                            <label for="explorer-region">Region</label>
+                            <select id="explorer-region">
+                                <option value="">Any</option>
+                                <option value="northeast">Northeast</option>
+                                <option value="midwest">Midwest</option>
+                                <option value="south">South</option>
+                                <option value="west">West</option>
+                            </select>
+                        </div>
+                        <div style="flex:1 1 160px;">
+                            <label for="explorer-sort">Sort by</label>
+                            <select id="explorer-sort">
+                                <option value="name">Name A–Z</option>
+                                <option value="ranking">Ranking</option>
+                                <option value="salary">Avg salary</option>
+                                <option value="fun">Fun score</option>
+                            </select>
+                        </div>
+                    </div>
+                    <p class="builder-tagline">Ratings are rough, student‑vibe style scores to help you compare quickly. Always cross‑check details on the official college site.</p>
+                </div>
+
+                <div id="explorer-results" class="explorer-grid">
+                    <!-- Cards rendered by explorer.js -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Essay Bros</h3>
+                    <p>Use the explorer to get ideas, then use the planner and essay builder to turn them into real applications.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Course</h4>
+                    <ul>
+                        <li><a href="index.html#curriculum">Curriculum</a></li>
+                        <li><a href="index.html#plans">Plans</a></li>
+                        <li><a href="protected-course.html">Student Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="essay-builder.html">Essay Builder</a></li>
+                        <li><a href="planner.html">College Planner</a></li>
+                        <li><a href="college-explorer.html">College Explorer</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="index.html#apply">Apply for Enrollment</a></li>
+                        <li>Email: hello@essaybros.com</li>
+                        <li>Phone: (555) 212-9901</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 The Essay Bros. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="explorer.js"></script>
+</body>
+</html>
+
