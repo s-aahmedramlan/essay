@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollment Pending - The Essay Bros</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+</head>
+<body class="course-body">
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1><a href="index.html" style="text-decoration: none; color: inherit;">The Essay Bros</a></h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#curriculum">Curriculum</a></li>
+                <li><a href="index.html#plans">Plans</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="writers.html">Mentors</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="logout.html" class="btn btn-primary btn-pill nav-cta">Log Out</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="course-hero" style="min-height: 60vh; display: flex; align-items: center;">
+        <div class="container" style="text-align: center; max-width: 560px;">
+            <h2 style="margin-bottom: 1rem;">Enrollment pending</h2>
+            <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                You're signed up. Course access is granted after your payment is confirmed. We'll mark your account as paid and you'll get full access to all modules.
+            </p>
+            <p style="font-size: 0.95rem; color: var(--text-muted);">
+                Questions? Email us at <a href="mailto:hello@essaybros.com" style="color: var(--primary-color);">hello@essaybros.com</a>.
+            </p>
+            <p style="margin-top: 2rem;">
+                <a href="logout.html" class="btn btn-secondary">Log out</a>
+            </p>
+        </div>
+    </section>
+
+    <script src="/amplify-config.js"></script>
+    <script src="/amplify-auth.js"></script>
+    <script src="script.js"></script>
+    <script>
+        (async function () {
+            if (window.AmplifyAuth?.isConfigured?.()) {
+                const user = await window.AmplifyAuth.getCurrentUser();
+                if (!user) {
+                    window.location.replace("login.html?status=login-required");
+                }
+            }
+        })();
+    </script>
+</body>
+</html>

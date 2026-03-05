@@ -100,6 +100,29 @@ window.AMPLIFY_CONFIG = {
   3. In [SES Console](https://console.aws.amazon.com/ses) → **Verified identities**, add and verify the **email address** you use for testing. In SES sandbox, only verified addresses receive mail.
 - **Resend code:** On the verification page, enter your email and click **Resend Code** to get a new 6-digit code.
 
+## Admin: Granting course access (paid status)
+
+Students can **sign up and log in** with Cognito, but they only see the **full course** after you mark them as paid. That’s stored in **DynamoDB**.
+
+1. **Create a DynamoDB table** (one-time):
+   - AWS Console → **DynamoDB** → **Tables** → **Create table**.
+   - **Table name:** `essaybros-access` (or any name; set `ACCESS_TABLE_NAME` in `.env` to match).
+   - **Partition key:** `email` (String).
+   - Create the table.
+
+2. **Grant a student access** (after they pay):
+   - DynamoDB → **Tables** → your table → **Explore table items** → **Create item**.
+   - **Partition key:** `email` = the student’s **login email in lowercase** (e.g. `student@example.com`). The app looks up by lowercase email.
+   - Add attribute: **status** (String) = `paid`.
+   - Save.
+
+3. **Environment:** In `.env` set:
+   - `ACCESS_TABLE_NAME=essaybros-access`
+   - `AWS_REGION=us-east-2` (or your Cognito region)
+   - Optionally `COGNITO_USER_POOL_ID` and `COGNITO_CLIENT_ID` if different from the values in `amplify-auth.js`.
+
+Until you add their email with `status = paid`, logged-in students are redirected to **pending-access.html** (“Enrollment pending”).
+
 ## Notes
 
 - **Cognito SES sandbox:** If using SES, only verified recipient addresses receive email until you leave sandbox.

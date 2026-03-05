@@ -33,9 +33,11 @@
 
   let amplifyConfigured = false;
 
+  var AMPLIFY_CDN = "https://esm.run/aws-amplify@6.15.10";
+
   async function init() {
     if (amplifyConfigured) return true;
-    const { Amplify } = await import("https://esm.run/aws-amplify");
+    const { Amplify } = await import(AMPLIFY_CDN);
     Amplify.configure(config);
     amplifyConfigured = true;
     return true;
@@ -48,44 +50,68 @@
 
     async signUp(email, password) {
       await init();
-      const { signUp } = await import("https://esm.run/aws-amplify/auth");
-      const result = await signUp({
+      const auth = await import(AMPLIFY_CDN + "/auth");
+      const signUpFn = auth.signUp || (auth.default && auth.default.signUp);
+      if (typeof signUpFn !== "function") throw new Error("Sign-up not available.");
+      return signUpFn({
         username: email,
         password,
         options: { userAttributes: { email } },
       });
-      return result;
     },
 
     async confirmSignUp(email, code) {
       await init();
-      const { confirmSignUp } = await import("https://esm.run/aws-amplify/auth");
-      return confirmSignUp({ username: email, confirmationCode: code });
+      const auth = await import(AMPLIFY_CDN + "/auth");
+      const fn = auth.confirmSignUp || (auth.default && auth.default.confirmSignUp);
+      if (typeof fn !== "function") throw new Error("Verification not available. Try again or contact support.");
+      return fn({ username: email, confirmationCode: code });
     },
 
     async resendConfirmationCode(email) {
       await init();
-      const { resendSignUpCode } = await import("https://esm.run/aws-amplify/auth");
-      return resendSignUpCode({ username: email });
+      const auth = await import(AMPLIFY_CDN + "/auth");
+      const fn = auth.resendSignUpCode || (auth.default && auth.default.resendSignUpCode);
+      if (typeof fn !== "function") throw new Error("Resend not available. Try again in a minute.");
+      return fn({ username: email });
     },
 
     async signIn(email, password) {
       await init();
-      const { signIn } = await import("https://esm.run/aws-amplify/auth");
-      return signIn({ username: email, password });
+      const auth = await import(AMPLIFY_CDN + "/auth");
+      const fn = auth.signIn || (auth.default && auth.default.signIn);
+      if (typeof fn !== "function") throw new Error("Sign-in not available.");
+      return fn({ username: email, password });
     },
 
     async signOut() {
       if (!amplifyConfigured) return;
-      const { signOut } = await import("https://esm.run/aws-amplify/auth");
-      await signOut();
+      const auth = await import(AMPLIFY_CDN + "/auth");
+      const fn = auth.signOut || (auth.default && auth.default.signOut);
+      if (typeof fn === "function") await fn();
     },
 
     async getCurrentUser() {
       if (!amplifyConfigured) return null;
       try {
-        const { getCurrentUser } = await import("https://esm.run/aws-amplify/auth");
-        return await getCurrentUser();
+        const auth = await import(AMPLIFY_CDN + "/auth");
+        const fn = auth.getCurrentUser || (auth.default && auth.default.getCurrentUser);
+        return typeof fn === "function" ? await fn() : null;
+      } catch {
+        return null;
+      }
+    },
+
+    /** Returns the Cognito ID token for calling /api/access (paid-status check). */
+    async getIdToken() {
+      if (!amplifyConfigured) return null;
+      try {
+        const auth = await import(AMPLIFY_CDN + "/auth");
+        const fn = auth.fetchAuthSession || (auth.default && auth.default.fetchAuthSession);
+        if (typeof fn !== "function") return null;
+        const session = await fn();
+        const token = session?.tokens?.idToken?.toString();
+        return token || null;
       } catch {
         return null;
       }

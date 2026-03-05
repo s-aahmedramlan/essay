@@ -6,33 +6,35 @@
 }
 
 :root {
-    --primary-color: #0d5c45;
-    --primary-dark: #0a3d2e;
-    --primary-light: #1a7a5f;
-    --secondary-color: #1a6b7a;
-    --accent-color: #2d9d8f;
-    --text-dark: #1c2127;
-    --text-body: #2d3748;
-    --text-light: #4a5568;
-    --text-muted: #718096;
-    --bg-light: #f7fafc;
+    /* Ivy League: crimson, white, navy */
+    --primary-color: #8B1538;
+    --primary-dark: #6b0f2a;
+    --primary-light: #a61b45;
+    --secondary-color: #1a1a2e;
+    --accent-color: #8B1538;
+    --text-dark: #1a1a2e;
+    --text-body: #2d2d3a;
+    --text-light: #4a4a5a;
+    --text-muted: #6b6b7a;
+    --bg-light: #fafafa;
     --bg-white: #ffffff;
-    --border-color: #e2e8f0;
-    --shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.12);
+    --border-color: #e8e8ec;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.1);
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     color: var(--text-body);
     font-size: 1.0625rem;
     line-height: 1.7;
     letter-spacing: 0.01em;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Crimson Pro', Georgia, serif;
     font-weight: 600;
     line-height: 1.25;
     color: var(--text-dark);
@@ -1404,6 +1406,12 @@ pre.builder-output {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+}
+
+.explorer-card-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
 }
 
 .explorer-image {

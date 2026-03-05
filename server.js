@@ -6,8 +6,21 @@ const bcrypt = require("bcrypt");
 const sqlite3 = require("sqlite3").verbose();
 const nodemailer = require("nodemailer");
 const { SendMailClient } = require("zeptomail");
+const { CognitoJwtVerifier } = require("aws-jwt-verify");
+const { DynamoDBClient, GetItemCommand } = require("@aws-sdk/client-dynamodb");
 
 require("dotenv").config();
+
+// Paid access: Cognito (auth) + DynamoDB (admin marks paid). Table key = email.
+const COGNITO_USER_POOL_ID = process.env.COGNITO_USER_POOL_ID || "us-east-2_mE9j7A8G8";
+const COGNITO_CLIENT_ID = process.env.COGNITO_CLIENT_ID || "2hmt806ccp2i8hlqdgfhuqfm93";
+const ACCESS_TABLE_NAME = process.env.ACCESS_TABLE_NAME || ""; // e.g. essaybros-access
+const dynamo = ACCESS_TABLE_NAME ? new DynamoDBClient({ region: process.env.AWS_REGION || "us-east-2" }) : null;
+const idVerifier = CognitoJwtVerifier.create({
+    userPoolId: COGNITO_USER_POOL_ID,
+    tokenUse: "id",
+    clientId: COGNITO_CLIENT_ID,
+});
 
 const zeptoToken = process.env.ZEPTOMAIL_TOKEN || "";
 const zeptoFrom = {
@@ -203,6 +216,12 @@ app.get("/amplify-config.js", (req, res) =>
 app.get("/amplify-auth.js", (req, res) =>
     res.sendFile(path.join(__dirname, "amplify-auth.js"))
 );
+app.get("/explorer.js", (req, res) =>
+    res.sendFile(path.join(__dirname, "explorer.js"))
+);
+app.get("/colleges-scraped.json", (req, res) =>
+    res.sendFile(path.join(__dirname, "colleges-scraped.json"))
+);
 
 app.get(["/", "/index.html"], (req, res) =>
     res.sendFile(path.join(__dirname, "index.html"))
@@ -269,6 +288,42 @@ app.get(["/confirm", "/confirm.html"], (req, res) =>
 app.get(["/logout-page", "/logout.html"], (req, res) =>
     res.sendFile(path.join(__dirname, "logout.html"))
 );
+app.get(["/pending-access", "/pending-access.html"], (req, res) =>
+    res.sendFile(path.join(__dirname, "pending-access.html"))
+);
+
+// Paid access: verify Cognito ID token, then check DynamoDB for status = "paid".
+app.get("/api/access", express.json(), async (req, res) => {
+    const auth = req.headers.authorization;
+    const token = auth && auth.startsWith("Bearer ") ? auth.slice(7) : null;
+    if (!token) {
+        return res.status(401).json({ error: "Missing token", paid: false });
+    }
+    let email = null;
+    try {
+        const payload = await idVerifier.verify(token);
+        email = payload.email || payload["cognito:username"] || payload.sub;
+    } catch (err) {
+        return res.status(401).json({ error: "Invalid or expired token", paid: false });
+    }
+    if (!ACCESS_TABLE_NAME || !dynamo) {
+        return res.json({ paid: false, message: "Access table not configured" });
+    }
+    try {
+        const { Item } = await dynamo.send(new GetItemCommand({
+            TableName: ACCESS_TABLE_NAME,
+            Key: {
+                email: { S: String(email).trim().toLowerCase() },
+            },
+        }));
+        const status = Item?.status?.S || Item?.paid?.BOOL;
+        const paid = status === "paid" || status === true;
+        return res.json({ paid, email: email });
+    } catch (err) {
+        console.error("DynamoDB GetItem error:", err.message);
+        return res.json({ paid: false });
+    }
+});
 
 setupDatabase().then(() => {
     app.listen(PORT, () => {
