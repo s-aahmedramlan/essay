@@ -191,6 +191,9 @@ app.get("/script.js", (req, res) =>
 app.get("/builder.js", (req, res) =>
     res.sendFile(path.join(__dirname, "builder.js"))
 );
+app.get("/explorer.js", (req, res) =>
+    res.sendFile(path.join(__dirname, "explorer.js"))
+);
 app.get("/auth.js", (req, res) =>
     res.sendFile(path.join(__dirname, "auth.js"))
 );
